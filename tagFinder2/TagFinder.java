@@ -2,38 +2,7 @@ import edu.duke.*;
 import java.io.*;
 
 public class TagFinder {
-	public String findProtein(String dna) {
-    dna = dna.toLowerCase();
-		int start = dna.indexOf("atg");
-		if (start == -1) {
-			return "";
-		}
-		int stop = dna.indexOf("tag", start+3);
-		if ((stop - start) % 3 == 0) {
-			return dna.substring(start, stop+3);
-		}
-    int stop2 = dna.indexOf("tga", start + 3);
-    if((stop2 - start) % 3 == 0){
-      return dna.substring(start, stop2 + 3);
-    }
-    int stop3 = dna.indexOf("taa", start + 3);
-    if((stop3 - start) % 3 == 0){
-      return dna.substring(start, stop3 + 3);
-    }
-    return "";
-	}
 
-  public void printAllGenes(String dna){
-    dna = dna.toLowerCase();
-    int startIdx = dna.indexOf("atg");
-    while(startIdx != -1){
-      int stopIdx = findStopIndex(dna, startIdx);
-      if(stopIdx != dna.length()){
-        System.out.println(dna.substring(startIdx, stopIdx + 3));
-      }
-      startIdx = dna.indexOf("atg", startIdx + 3);
-    }
-  }
 
   public int findStopIndex(String dna, int index) {
     int stop1 = dna.indexOf("tga", index);
@@ -50,4 +19,93 @@ public class TagFinder {
     }
     return Math.min(stop1, Math.min(stop2, stop3));
   }
+
+  public double cgRatio(String dna){
+    dna = dna.toLowerCase();
+    int idx = 0;
+    double count = 0.0;
+    while(idx < dna.length()){
+      String chr = dna.substring(idx, idx + 1);
+      if(chr.indexOf("c") != -1 || chr.indexOf("g") != -1){
+        count = count + 1.0;
+      }
+      idx = idx + 1;
+    }
+    return count/dna.length(); 
+  }
+
+  public int countCTG(String dna){
+    dna = dna.toLowerCase();
+    int count = 0;
+    int idx = 0;
+    while(true){
+      idx  = dna.indexOf("ctg", idx); 
+      if(idx == -1){
+        break;
+      }
+      count = count + 1;
+      idx = idx + 3;
+    }
+    return count;
+  }
+
+  public StorageResource storeAllGenes(String dna){
+    dna = dna.toLowerCase();
+    StorageResource store = new StorageResource();
+    int startIdx = dna.indexOf("atg");
+    while(startIdx != -1){
+      int stopIdx = findStopIndex(dna, startIdx + 3);
+      if(stopIdx != dna.length()){
+        String newGene = dna.substring(startIdx, stopIdx + 3);
+        store.add(newGene);
+        startIdx = dna.indexOf("atg", stopIdx + 3);
+      } else {
+        startIdx = dna.indexOf("atg", startIdx + 3);
+      }
+    }
+    return store;
+  }
+
+  public int longestGene(StorageResource sr){
+    int longest = 0;
+    for(String gene: sr.data()){
+      if(gene.length() > longest){
+        longest = gene.length();
+      }
+    }
+    return longest;
+  }
+
+
+  public void printGenes(StorageResource sr){
+    int count60 = 0;
+    int countRat = 0;
+    for(String gene : sr.data()){
+      if(gene.length() > 60){
+        System.out.println(gene);
+        count60 = count60 + 1;
+      }
+      if(cgRatio(gene) > 0.35){
+        System.out.println(gene);
+        countRat = countRat + 1;
+      }
+    }
+    System.out.println("Count of genes longer than 60:");
+    System.out.println(count60);
+    System.out.println("Count of genes with >0.35 CG ratio:");
+    System.out.println(countRat);
+  }
+
+
+  public void testStorageFinder(){
+    FileResource file = new FileResource("brca1line.fa");
+    String line = file.asString();
+    StorageResource store = storeAllGenes(line);
+    printGenes(store);
+    System.out.println("Longest gene length found:");
+    System.out.println(longestGene(store));
+    System.out.println("Count of genes found:");
+    System.out.println(store.size());
+  }
+
 }

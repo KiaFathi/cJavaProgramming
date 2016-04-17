@@ -1,8 +1,14 @@
 #BlueJ class context
-comment0.params=dna
-comment0.target=java.lang.String\ findProtein(java.lang.String)
+comment0.params=dna\ index
+comment0.target=int\ findStopIndex(java.lang.String,\ int)
 comment1.params=dna
-comment1.target=void\ printAllGenes(java.lang.String)
-comment2.params=dna\ index
-comment2.target=int\ findStopIndex(java.lang.String,\ int)
-numComments=3
+comment1.target=double\ cgRatio(java.lang.String)
+comment2.params=dna
+comment2.target=int\ countCTG(java.lang.String)
+comment3.params=dna
+comment3.target=edu.duke.StorageResource\ storeAllGenes(java.lang.String)
+comment4.params=sr
+comment4.target=void\ printGenes(edu.duke.StorageResource)
+comment5.params=
+comment5.target=void\ testStorageFinder()
+numComments=6
