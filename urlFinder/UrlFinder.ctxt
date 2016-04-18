@@ -1,6 +1,18 @@
 #BlueJ class context
 comment0.params=ln
-comment0.target=void\ findYoutubeLink(java.lang.String)
-comment1.params=
-comment1.target=void\ findUrls()
-numComments=2
+comment0.target=java.lang.String\ findUrl(java.lang.String)
+comment1.params=src
+comment1.target=edu.duke.StorageResource\ findUrls(java.lang.String)
+comment2.params=sr
+comment2.target=void\ printAllURLS(edu.duke.StorageResource)
+comment3.params=sr\ test
+comment3.target=int\ countTest(edu.duke.StorageResource,\ java.lang.String)
+comment4.params=sr\ test
+comment4.target=int\ countEndsTest(edu.duke.StorageResource,\ java.lang.String)
+comment5.params=sr\ test
+comment5.target=int\ countStartsTest(edu.duke.StorageResource,\ java.lang.String)
+comment6.params=sr
+comment6.target=int\ countPeriod(edu.duke.StorageResource)
+comment7.params=
+comment7.target=void\ testURLWithStorage()
+numComments=8

@@ -98,7 +98,7 @@ public class TagFinder {
 
 
   public void testStorageFinder(){
-    FileResource file = new FileResource("brca1line.fa");
+    FileResource file = new FileResource("GRch38dnapart.fa");
     String line = file.asString();
     StorageResource store = storeAllGenes(line);
     printGenes(store);
@@ -106,6 +106,8 @@ public class TagFinder {
     System.out.println(longestGene(store));
     System.out.println("Count of genes found:");
     System.out.println(store.size());
+    System.out.println("Count of ctg codon in str:");
+    System.out.println(countCTG(line));
   }
 
 }
